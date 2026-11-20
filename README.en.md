@@ -21,7 +21,7 @@ A Chrome Extension (Manifest V3) that detects copied SVG code or dropped `.svg` 
 1. Open `chrome://extensions/` in Google Chrome.
 2. Enable **Developer mode** in the top-right corner.
 3. Click **Load unpacked** in the top-left corner.
-4. Select the `gemini-svg-exporter` folder.
+4. Select the `SVG-Clipboard-Exporter` folder.
 
 ## Permissions, Privacy & Security
 
