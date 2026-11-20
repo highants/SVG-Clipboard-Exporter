@@ -1,0 +1,468 @@
+/* Scoped styles for SVG Clipboard Exporter overlay prompt & toast notifications */
+dialog.gse-dialog,
+#gse-toast-region {
+  --gse-bg: #f8fafc;
+  --gse-surface: #ffffff;
+  --gse-surface-hover: #f1f5f9;
+  --gse-border: #cbd5e1;
+  --gse-text: #0f172a;
+  --gse-muted: #475569;
+  --gse-accent: #4f46e5;
+  --gse-accent-hover: #4338ca;
+  --gse-accent-text: #ffffff;
+  --gse-success: #15803d;
+  --gse-success-bg: #dcfce7;
+  --gse-error: #b91c1c;
+  --gse-error-bg: #fee2e2;
+  --gse-focus: #4f46e5;
+  --gse-checker-a: #f1f5f9;
+  --gse-checker-b: #e2e8f0;
+
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--gse-text);
+  color-scheme: light;
+}
+
+dialog.gse-dialog[data-gse-theme="dark"],
+#gse-toast-region[data-gse-theme="dark"] {
+  --gse-bg: #1e2028;
+  --gse-surface: #282b36;
+  --gse-surface-hover: #343846;
+  --gse-border: #3f4456;
+  --gse-text: #f1f5f9;
+  --gse-muted: #cbd5e1;
+  --gse-accent: #6366f1;
+  --gse-accent-hover: #818cf8;
+  --gse-accent-text: #ffffff;
+  --gse-success: #4ade80;
+  --gse-success-bg: #14532d;
+  --gse-error: #fca5a5;
+  --gse-error-bg: #7f1d1d;
+  --gse-focus: #a5b4fc;
+  --gse-checker-a: #20232c;
+  --gse-checker-b: #2b2f3c;
+
+  color-scheme: dark;
+}
+
+@supports (color: light-dark(white, black)) {
+
+  dialog.gse-dialog,
+  #gse-toast-region {
+    --gse-bg: light-dark(#f8fafc, #1e2028);
+    --gse-surface: light-dark(#ffffff, #282b36);
+    --gse-surface-hover: light-dark(#f1f5f9, #343846);
+    --gse-border: light-dark(#cbd5e1, #3f4456);
+    --gse-text: light-dark(#0f172a, #f1f5f9);
+    --gse-muted: light-dark(#475569, #cbd5e1);
+    --gse-accent: light-dark(#4f46e5, #6366f1);
+    --gse-accent-hover: light-dark(#4338ca, #818cf8);
+    --gse-success: light-dark(#15803d, #4ade80);
+    --gse-success-bg: light-dark(#dcfce7, #14532d);
+    --gse-error: light-dark(#b91c1c, #fca5a5);
+    --gse-error-bg: light-dark(#fee2e2, #7f1d1d);
+    --gse-focus: light-dark(#4f46e5, #a5b4fc);
+    --gse-checker-a: light-dark(#f1f5f9, #20232c);
+    --gse-checker-b: light-dark(#e2e8f0, #2b2f3c);
+  }
+}
+
+dialog.gse-dialog *,
+#gse-toast-region * {
+  box-sizing: border-box;
+}
+
+/* Never set display unconditionally on <dialog>; scope strictly to open popover state */
+dialog.gse-dialog[popover="manual"] {
+  position: fixed;
+  inset: auto 20px 20px auto;
+  margin: 0;
+  padding: 14px;
+  inline-size: min(360px, calc(100vw - 32px));
+  max-block-size: calc(100vh - 40px);
+  overflow: auto;
+  border: 1px solid var(--gse-border);
+  border-radius: 12px;
+  background-color: var(--gse-bg);
+  color: var(--gse-text);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+dialog.gse-dialog[popover="manual"]:is(:popover-open, .\:popover-open) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  dialog.gse-dialog[popover="manual"] {
+    transition: opacity 0.2s ease, transform 0.2s ease, display 0.2s ease, overlay 0.2s ease;
+    transition-behavior: allow-discrete;
+  }
+
+  @starting-style {
+    dialog.gse-dialog[popover="manual"]:is(:popover-open, .\:popover-open) {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.gse-dialog[popover="manual"] {
+    transform: none;
+    transition: opacity 0.12s linear;
+  }
+}
+
+.gse-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gse-dialog-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-inline-size: 0;
+}
+
+.gse-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background-color: var(--gse-accent);
+  color: var(--gse-accent-text);
+}
+
+.gse-dialog-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gse-dialog-question {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--gse-muted);
+}
+
+.gse-preview-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  min-block-size: 96px;
+  max-block-size: 180px;
+  overflow: auto;
+  border: 1px solid var(--gse-border);
+  border-radius: 8px;
+  background-image:
+    linear-gradient(45deg, var(--gse-checker-b) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--gse-checker-b) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--gse-checker-b) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--gse-checker-b) 75%);
+  background-size: 14px 14px;
+  background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+  background-color: var(--gse-checker-a);
+}
+
+.gse-preview-img {
+  display: block;
+  max-inline-size: 100%;
+  max-block-size: 156px;
+  object-fit: contain;
+}
+
+.gse-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gse-muted);
+}
+
+.gse-dims {
+  font-variant-numeric: tabular-nums;
+}
+
+.gse-scale-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gse-scale-select {
+  min-inline-size: 56px;
+  min-block-size: 28px;
+  padding: 2px 6px;
+  border: 1px solid var(--gse-border);
+  border-radius: 6px;
+  background-color: var(--gse-surface);
+  color: var(--gse-text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gse-save-svg-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--gse-text);
+  cursor: pointer;
+}
+
+.gse-save-svg-check {
+  inline-size: 15px;
+  block-size: 15px;
+  accent-color: var(--gse-accent);
+  cursor: pointer;
+}
+
+.gse-actions-primary,
+.gse-actions-secondary {
+  display: grid;
+  gap: 6px;
+}
+
+.gse-actions-primary {
+  grid-template-columns: 1fr 1fr;
+}
+
+.gse-actions-secondary {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gse-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-inline-size: 28px;
+  min-block-size: 32px;
+  padding: 6px 10px;
+  border: 1px solid var(--gse-border);
+  border-radius: 8px;
+  background-color: var(--gse-surface);
+  color: var(--gse-text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gse-btn-primary {
+  background-color: var(--gse-accent);
+  border-color: var(--gse-accent);
+  color: var(--gse-accent-text);
+}
+
+.gse-btn-close {
+  flex: none;
+  min-inline-size: 28px;
+  min-block-size: 28px;
+  padding: 2px 6px;
+  border: 1px solid var(--gse-border);
+  border-radius: 6px;
+  background-color: var(--gse-surface);
+  color: var(--gse-text);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.gse-btn[data-copied] {
+  background-color: var(--gse-success-bg);
+  border-color: var(--gse-success);
+  color: var(--gse-success);
+}
+
+.gse-btn[data-failed] {
+  background-color: var(--gse-error-bg);
+  border-color: var(--gse-error);
+  color: var(--gse-error);
+}
+
+.gse-btn:focus-visible,
+.gse-btn-close:focus-visible,
+.gse-scale-select:focus-visible,
+.gse-toast-close:focus-visible {
+  outline: 2px solid var(--gse-focus);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+
+  .gse-btn:hover,
+  .gse-btn-close:hover,
+  .gse-scale-select:hover {
+    background-color: var(--gse-surface-hover);
+  }
+
+  .gse-btn-primary:hover {
+    background-color: var(--gse-accent-hover);
+    border-color: var(--gse-accent-hover);
+  }
+}
+
+@media (pointer: coarse) {
+
+  .gse-btn,
+  .gse-btn-close,
+  .gse-scale-select {
+    min-inline-size: 40px;
+    min-block-size: 40px;
+  }
+}
+
+.gse-dialog-status {
+  margin: 0;
+  min-block-size: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gse-success);
+  opacity: 0;
+}
+
+.gse-dialog-status[data-visible="true"] {
+  opacity: 1;
+}
+
+.gse-dialog-status[data-state="error"] {
+  color: var(--gse-error);
+}
+
+/* Toast Notification Region & Popover */
+#gse-toast-region {
+  position: fixed;
+  inset: auto 0 0 auto;
+  pointer-events: none;
+}
+
+.gse-toast[popover="manual"] {
+  pointer-events: auto;
+  position: fixed;
+  inset: auto;
+  inset-block-end: calc(20px + var(--gse-toast-offset, 0px));
+  inset-inline-end: 20px;
+  margin: 0;
+  padding: 10px 14px;
+  min-inline-size: min(280px, calc(100vw - 32px));
+  max-inline-size: min(400px, calc(100vw - 32px));
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--gse-border);
+  border-radius: 10px;
+  background-color: var(--gse-surface);
+  color: var(--gse-text);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.gse-toast[popover="manual"]:is(:popover-open, .\:popover-open) {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gse-toast[data-variant="success"] {
+  border-color: var(--gse-success);
+}
+
+.gse-toast[data-variant="error"] {
+  border-color: var(--gse-error);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gse-toast[popover="manual"] {
+    transition: opacity 0.2s ease, transform 0.2s ease, display 0.2s ease, overlay 0.2s ease;
+    transition-behavior: allow-discrete;
+  }
+
+  @starting-style {
+    .gse-toast[popover="manual"]:is(:popover-open, .\:popover-open) {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gse-toast[popover="manual"] {
+    transform: none;
+    transition: opacity 0.12s linear;
+  }
+}
+
+.gse-toast-msg {
+  flex: 1 1 auto;
+  word-break: break-word;
+}
+
+.gse-toast-close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 28px;
+  min-block-size: 28px;
+  padding: 2px 6px;
+  border: 1px solid var(--gse-border);
+  border-radius: 6px;
+  background-color: var(--gse-bg);
+  color: var(--gse-text);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.gse-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (forced-colors: active) {
+
+  dialog.gse-dialog[popover="manual"],
+  .gse-toast[popover="manual"],
+  .gse-btn,
+  .gse-btn-close,
+  .gse-scale-select,
+  .gse-toast-close {
+    border-color: ButtonText;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  .gse-btn-primary {
+    background-color: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+}

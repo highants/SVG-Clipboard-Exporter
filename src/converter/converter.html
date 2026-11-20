@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>SVG Drag &amp; Drop Converter</title>
+  <link rel="stylesheet" href="converter.css">
+</head>
+<body>
+  <main class="converter-root">
+    <header class="converter-header">
+      <div class="title-row">
+        <img src="../../icons/icon-48.png" width="28" height="28" alt="" class="app-icon">
+        <div>
+          <h1 data-i18n="converterTitle">SVG ドラッグ＆ドロップ変換</h1>
+          <p class="subtitle" data-i18n="converterSubtitle">SVGファイルを直接ドラッグ＆ドロップ、または Ctrl+V で貼り付けてPNG/JPGへ変換できます</p>
+        </div>
+      </div>
+      <button id="btn-lang-toggle" type="button" class="pill-btn" data-i18n="langToggleShort" data-i18n-aria="langToggleLabel">EN</button>
+    </header>
+
+    <section class="drop-area-wrap">
+      <div id="drop-area" class="drop-area" tabindex="0" role="button" data-i18n-aria="converterDropMain">
+        <input id="file-input" type="file" accept=".svg,image/svg+xml" multiple hidden>
+        <p id="drop-main-text" class="drop-main" data-i18n="converterDropMain">ここにSVGファイルをドラッグ＆ドロップ（複数ファイル対応）</p>
+        <p class="drop-sub" data-i18n="converterDropSub">クリックしてファイル選択 / Ctrl+V でSVGコードを貼り付け</p>
+      </div>
+      <p id="global-status" class="status-line" role="status"></p>
+    </section>
+
+    <section class="options-bar">
+      <label class="opt-item" for="opt-scale">
+        <span data-i18n="scaleLabel">倍率</span>
+        <select id="opt-scale">
+          <option value="1">1x</option>
+          <option value="2">2x</option>
+          <option value="3">3x</option>
+          <option value="4">4x</option>
+        </select>
+      </label>
+
+      <label class="opt-item" for="opt-png-bg">
+        <span data-i18n="pngBgLabel">PNG背景設定</span>
+        <select id="opt-png-bg">
+          <option value="transparent" data-i18n="pngBgTransparent">透過（Transparent）</option>
+          <option value="white" data-i18n="pngBgWhite">白背景（#FFFFFF）</option>
+          <option value="custom" data-i18n="pngBgCustom">カスタム背景色</option>
+        </select>
+      </label>
+
+      <label class="opt-item" for="opt-jpg-bg">
+        <span data-i18n="jpgBgColorLabel">JPG背景色</span>
+        <input id="opt-jpg-bg" type="color" value="#FFFFFF">
+      </label>
+
+      <label class="opt-check" for="opt-save-svg">
+        <input id="opt-save-svg" type="checkbox">
+        <span data-i18n="saveWithSvgShort">保存時にSVGファイルも一緒に保存</span>
+      </label>
+    </section>
+
+    <!-- Active selected SVG preview & actions -->
+    <section id="workspace-section" class="workspace-card" hidden>
+      <div class="workspace-head">
+        <strong id="active-filename" class="active-filename"></strong>
+        <span id="active-dims" class="active-dims"></span>
+      </div>
+
+      <div id="preview-box" class="preview-box">
+        <img id="preview-img" class="preview-img" alt="">
+      </div>
+
+      <div class="action-grid">
+        <button id="btn-copy-png" type="button" class="btn btn-primary" data-i18n="btnCopyPng">PNGに変換してコピー</button>
+        <button id="btn-copy-jpg" type="button" class="btn btn-primary" data-i18n="btnCopyJpg">JPGに変換してコピー</button>
+        <button id="btn-save-png" type="button" class="btn" data-i18n="btnSavePng">PNG保存</button>
+        <button id="btn-save-jpg" type="button" class="btn" data-i18n="btnSaveJpg">JPG保存</button>
+      </div>
+    </section>
+
+    <p id="empty-hint" class="empty-hint" data-i18n="converterEmptyHint">
+      SVGファイルをドロップするとプレビューと変換ボタンが表示されます。
+    </p>
+
+    <!-- Loaded file queue (supports batch export) -->
+    <section id="queue-section" class="queue-card" hidden>
+      <div class="queue-head">
+        <h2 id="queue-heading" class="queue-heading"></h2>
+        <div class="queue-batch-actions">
+          <button id="btn-batch-png" type="button" class="btn btn-sm" data-i18n="converterBatchPng">すべてPNG保存</button>
+          <button id="btn-batch-jpg" type="button" class="btn btn-sm" data-i18n="converterBatchJpg">すべてJPG保存</button>
+          <button id="btn-clear-all" type="button" class="btn btn-sm" data-i18n="converterClearAll">リストをクリア</button>
+        </div>
+      </div>
+      <ul id="file-list" class="file-list"></ul>
+    </section>
+  </main>
+
+  <script src="../shared/settings.js"></script>
+  <script src="../shared/i18n.js"></script>
+  <script src="../shared/svg-utils.js"></script>
+  <script src="../shared/renderer.js"></script>
+  <script src="converter.js"></script>
+</body>
+</html>

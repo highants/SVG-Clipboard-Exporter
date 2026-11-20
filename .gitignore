@@ -1,0 +1,22 @@
+# Chrome Extension Packaging & Private Keys
+*.pem
+*.crx
+*.zip
+
+# Environment & Secrets
+.env
+.env.*
+
+# Dependencies & Logs
+node_modules/
+npm-debug.log*
+*.log
+
+# OS & Editor Artifacts
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+tmp/
