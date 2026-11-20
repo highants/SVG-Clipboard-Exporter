@@ -52,6 +52,6 @@ node --test tests/manifest.test.mjs tests/i18n.test.mjs tests/svg-utils.test.mjs
 
 ## クレジット・ライセンス
 
-- **制作ディレクション**: highants
+- **監督**: highants
 - **開発**: Antigravity (Google Deepmind)
 - **ライセンス**: [MIT License](LICENSE)

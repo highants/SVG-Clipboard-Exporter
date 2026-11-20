@@ -52,6 +52,6 @@ node --test tests/manifest.test.mjs tests/i18n.test.mjs tests/svg-utils.test.mjs
 
 ## Credits & License
 
-- **Direction**: highants
+- **Director**: highants
 - **Development**: Antigravity (Google Deepmind)
 - **License**: [MIT License](LICENSE)
